@@ -10,6 +10,9 @@ local keymap = vim.keymap -- for conciseness
 -- clear search highlights
 keymap.set("n", "<leader>nh", ":nohl<CR>")
 
+-- save file
+keymap.set("n", "<leader>w", ":w<CR>")
+
 -- delete single character without copying into register
 keymap.set("n", "x", '"_x')
 
@@ -32,11 +35,14 @@ keymap.set("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
 -- Plugin Keybinds
 ----------------------
 
+-- Toggle Term
+keymap.set("n", "<C-t>", ":ToggleTerm size=90 direction=vertical<CR>") -- toggle split window maximization
+
 -- vim-maximizer
 keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle split window maximization
 
 -- nvim-tree
-keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>") -- toggle file explorer
+keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>") -- toggle file explorer
 
 -- telescope
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore
@@ -53,3 +59,28 @@ keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>") -- list current c
 
 -- restart lsp server (not on youtube nvim video)
 keymap.set("n", "<leader>rs", ":LspRestart<CR>") -- mapping to restart lsp if necessary
+
+-- leetbuddy
+keymap.set("n","<leader>lqs", "<cmd>LBQuestions<cr>") -- toggle leetbuddy question list
+keymap.set("n","<leader>lq", "<cmd>LBQuestion<cr>") -- toggle leetbuddy question list
+keymap.set("n","<leader>ls", "<cmd>LBSubmit<cr>") -- toggle leetbuddy question list
+keymap.set("n","<leader>lt", "<cmd>LBTest<cr>") -- toggle leetbuddy question list
+keymap.set("n","<leader>lr", "<cmd>LBReset<cr>") -- toggle leetbuddy question list
+
+-- bufferline
+keymap.set("n", "<C-h>", ":BufferLineCyclePrev<CR>") -- toggle file explorer
+keymap.set("n", "<C-l>", ":BufferLineCycleNext<CR>") -- toggle file explorer
+
+-- Helper function to switch to a specific buffer
+local function switch_to_buffer(index)
+  vim.api.nvim_set_keymap('n', '<C-M-' .. index .. '>', ':BufferLineGoToBuffer ' .. index .. '<CR>', { noremap = true, silent = true })
+end
+
+-- Map Ctrl+Alt+1-6 to switch between buffers
+--for i = 1, 6 do
+--  keymap.set("n", "<C-M-" .. i .. ">", ":BufferLineGoToBuffer " .. i .. "<CR>", { noremap = true, silent = true })
+--end
+
+for i = 1, 6 do
+  keymap.set("n", "<M-" .. i .. ">", ":BufferLineGoToBuffer " .. i .. "<CR>", { noremap = true, silent = true })
+end
